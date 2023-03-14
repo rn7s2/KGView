@@ -67,8 +67,10 @@ initKG = function (data, config, container) {
         }
     });
 
-    var width = config.width? config.width:1560,
-        height = config.height? config.height:800;
+    var width = config.width ? config.width : 1560,
+        height = config.height ? config.height : 800;
+
+    console.log(nodes)
 
     //json格式转化
     var force = d3.layout.force()
@@ -199,15 +201,15 @@ initKG = function (data, config, container) {
             //再次点击还原
             edges_line.style("stroke-width", function (line) {
                 //当与连接点连接时变粗
-                if ((line.source.name == node.name || line.target.name == node.name) ) {
-                    if (line.focus && node.focus){
+                if ((line.source.name == node.name || line.target.name == node.name)) {
+                    if (line.focus && node.focus) {
                         line.focus = false;
                         return 1;
-                    }else{
+                    } else {
                         line.focus = true;
                         return 2.5;
                     }
-                }else{
+                } else {
                     return 1;
                 }
 
@@ -216,14 +218,14 @@ initKG = function (data, config, container) {
             //焦点取反
             node.focus = !node.focus
             //判断是不是点击的同一个node
-            if (lastFocusNode != node && lastFocusNode != null){
+            if (lastFocusNode != node && lastFocusNode != null) {
                 lastFocusNode.focus = false
-            } 
+            }
             //进行判断
             if (node.focus) {
                 //被选中的圆圈边框
                 d3.select(this).style('stroke-width', 2.5);
-            }else{
+            } else {
                 d3.select(this).style('stroke-width', 1);
             }
             lastFocusNode = node;
@@ -235,9 +237,9 @@ initKG = function (data, config, container) {
         .on("mouseover", function (d) {
             //config：替换成需要回显的html
             var content;
-            if (config.contentHook){
+            if (config.contentHook) {
                 content = config.contentHook(d);
-            }else{
+            } else {
                 content = config.content;
             }
             tooltip.html(content)
